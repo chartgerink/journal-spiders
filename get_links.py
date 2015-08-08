@@ -34,10 +34,12 @@ def process(url):
     page.close()
 
     soup = BeautifulSoup(text)
+    links = []
 
     for tag in soup.findAll('a', href=True):
         tag['href'] = urlparse.urljoin(url, tag['href'])
-        print tag['href']
+        links.append(tag['href'])
+    return links
 # process(url)
 
 
