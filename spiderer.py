@@ -1,6 +1,6 @@
 import numpy as np
 import re
-import
+import edit
 from get_links import process
 
 # get all links from lvl1 (in an array)
