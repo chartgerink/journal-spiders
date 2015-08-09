@@ -8,7 +8,7 @@ lvl1 = 'http://pss.sagepub.com/content/by/year/'
 lvl1_recog = 'http://pss.sagepub.com/content/by/year/[0-9]{4}'
 
 # links to recognize at lvl2 for lvl3
-lvl2_recog = 'http://pss.sagepub.com/content/vol[0-9]{1-3}/issue[0-9]{1-2}/'
+lvl2_recog = 'http://pss.sagepub.com/content/vol[0-9]{1,}/issue[0-9]{1,}/'
 
 # get all links from lvl1 (in an array)
 lvl2_unselect = np.array(process(lvl1))
@@ -31,3 +31,9 @@ for link in lvl2:
 	r = re.compile(lvl2_recog)
 	vmatch = np.vectorize(lambda x:bool(r.match(x)))
 	lvl3.append(np.sort(lvl3_unselect[vmatch(lvl3_unselect)]))
+
+	print "Still working"
+
+# fit all results of lvl3 into one array instead of multiple
+lvl3 = np.concatenate(lvl3)
+
