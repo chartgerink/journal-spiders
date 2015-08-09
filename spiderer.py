@@ -1,21 +1,12 @@
 import numpy as np
 import re
+import
 from get_links import process
 
-# lvl1 is the base url
-lvl1 = 'http://pss.sagepub.com/content/by/year/'
-
-# links to recognize at lvl1 for lvl2
-lvl1_recog = 'http://pss.sagepub.com/content/by/year/[0-9]{4}'
-# links to recognize at lvl2 for lvl3
-lvl2_recog = 'http://pss.sagepub.com/content/vol[0-9]{1,}/issue[0-9]{1,}/'
-# links to recognize at lvl3 for lvl4
-lvl3_recog = 'http://pss.sagepub.com/content/[0-9]{1,}/[0-9]{1,}/[0-9]{1,}$'
-
 # get all links from lvl1 (in an array)
-lvl2_unselect = np.array(process(lvl1))
+lvl2_unselect = np.array(process(edit.lvl1))
 # select only the lvl2 recognized links
-r = re.compile(lvl1_recog)
+r = re.compile(edit.lvl1_recog)
 vmatch = np.vectorize(lambda x:bool(r.match(x)))
 lvl2 = np.sort(lvl2_unselect[vmatch(lvl2_unselect)]) # make sure they are sorted
 
@@ -26,7 +17,7 @@ for link in lvl2:
 	lvl3_unselect = np.array(process(link))
 
 	# select only the lvl3 recognized links
-	r = re.compile(lvl2_recog)
+	r = re.compile(edit.lvl2_recog)
 	vmatch = np.vectorize(lambda x:bool(r.match(x)))
 	lvl3.append(np.sort(lvl3_unselect[vmatch(lvl3_unselect)]))
 
@@ -42,7 +33,7 @@ for link in lvl3:
 	lvl4_unselect = np.array(process(link))
 
 	# select only the lvl3 recognized links
-	r = re.compile(lvl3_recog)
+	r = re.compile(edit.lvl3_recog)
 	vmatch = np.vectorize(lambda x:bool(r.match(x)))
 	lvl4.append(np.sort(lvl4_unselect[vmatch(lvl4_unselect)]))
 
@@ -51,4 +42,4 @@ for link in lvl3:
 # fit all results of lvl4 into one array instead of multiple
 lvl4 = np.concatenate(lvl4)
 
-np.savetxt(journal, lvl4, fmt = "%s")
+np.savetxt("journals/%s.csv" % edit.journal, lvl4, fmt = "%s")
