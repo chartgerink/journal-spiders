@@ -12,6 +12,8 @@ Given a webpage, extract all links.
 Usage:
 ------
 ./get_links.py <URL>
+
+CHJH: Just a minor edit to save results in a vector
 """
 
 import sys
@@ -38,8 +40,8 @@ def process(url):
 
     for tag in soup.findAll('a', href=True):
         tag['href'] = urlparse.urljoin(url, tag['href'])
-        links.append(tag['href'])
-    return links
+        links.append(tag['href']) #CHJH
+    return links # CHJH
 # process(url)
 
 
