@@ -10,7 +10,7 @@ lvl1_recog = 'http://pss.sagepub.com/content/by/year/[0-9]{4}'
 # links to recognize at lvl2 for lvl3
 lvl2_recog = 'http://pss.sagepub.com/content/vol[0-9]{1,}/issue[0-9]{1,}/'
 # links to recognize at lvl3 for lvl4
-lvl3_recog = 'http://pss.sagepub.com/content/[0-9]{1,}/[0-9]{1,}/[0-9]{1,}'
+lvl3_recog = 'http://pss.sagepub.com/content/[0-9]{1,}/[0-9]{1,}/[0-9]{1,}$'
 
 # get all links from lvl1 (in an array)
 lvl2_unselect = np.array(process(lvl1))
@@ -50,3 +50,5 @@ for link in lvl3:
 
 # fit all results of lvl4 into one array instead of multiple
 lvl4 = np.concatenate(lvl4)
+
+np.savetxt(journal, lvl4, fmt = "%s")
