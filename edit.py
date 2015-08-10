@@ -10,3 +10,5 @@ lvl1_recog = 'http://psr.sagepub.com/content/by/year/[0-9]{4}'
 lvl2_recog = 'http://psr.sagepub.com/content/vol[0-9]{1,}/issue[0-9]{1,}/'
 # links to recognize at lvl3 for lvl4
 lvl3_recog = 'http://psr.sagepub.com/content/[0-9]{1,}/[0-9]{1,}/[0-9]{1,}.abstract'
+
+np.genfromtxt('edit_list.csv', delimiter = ';', skiprows = 1, dtype = 'str')
