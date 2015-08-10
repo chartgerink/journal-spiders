@@ -1,5 +1,6 @@
 from spiderer import spiderer
 from time import strftime
+import numpy as np
 
 journals = np.genfromtxt('journal_list.csv',
  delimiter = ';',
@@ -12,7 +13,7 @@ journals = np.genfromtxt('journal_list.csv',
 # 3. Journal publisher
 # 4. Journal full name
 
-for i in range(0, len(x)):
+for i in range(0, len(journals)):
 	# Run the spiderer for the journal
 	spiderer(journal = journals[i][1], publisher = journals[i][2])
 	# Update the last update time
