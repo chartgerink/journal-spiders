@@ -1,0 +1,4 @@
+update;publisher;journal;lvl1;lvl1_recog;lvl2_recog;lvl3_recog
+20150809;sage;psychologicalscience;http://pss.sagepub.com/content/by/year/;http://pss.sagepub.com/content/by/year/[0-9]{4};http://pss.sagepub.com/content/vol[0-9]{1,}/issue[0-9]{1,}/;http://pss.sagepub.com/content/[0-9]{1,}/[0-9]{1,}/[0-9]{1,}.abstract
+20150809;sage;persppsychscience;http://pps.sagepub.com/content/by/year/;http://pps.sagepub.com/content/by/year/[0-9]{4};http://pps.sagepub.com/content/vol[0-9]{1,}/issue[0-9]{1,}/;http://pps.sagepub.com/content/[0-9]{1,}/[0-9]{1,}/[0-9]{1,}.abstract
+20150809;sage;perssocialpsychrev;http://psr.sagepub.com/content/by/year/;http://psr.sagepub.com/content/by/year/[0-9]{4};http://psr.sagepub.com/content/vol[0-9]{1,}/issue[0-9]{1,}/;http://psr.sagepub.com/content/[0-9]{1,}/[0-9]{1,}/[0-9]{1,}.abstract
