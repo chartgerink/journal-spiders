@@ -13,7 +13,7 @@ def springer(journal):
 	# links to recognize at lvl1 for lvl2
 	lvl1_recog = 'http://link.springer.com/journal/[0-9]{1,}/[0-9]{1,}/[0-9]{1,}/page/[0-9]{1,}'
 	# links to recognize at lvl2 for lvl3
-	lvl2_recog = 'http://link.springer.com/article/[0-9]{2}.[0-9]{4}/.*(?!/fulltext.html)$'
+	lvl2_recog = 'http://link\.springer\.com/article/[0-9]{2}\.[0-9]{4}/(?!.*fulltext\.html$).*'
 
 	# get all links from lvl1 (in an array)
 	lvl2_unselect = np.array(process(lvl1))
