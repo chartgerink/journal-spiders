@@ -1,9 +1,8 @@
 def spiderer(journal, publisher):
 	if publisher == 'sage':
-		sage(journal = journal, publisher = publisher)
+		sage(journal = journal)
 
-
-def sage(journal, publisher):
+def sage(journal):
 	import numpy as np
 	import re
 	from get_links import process
