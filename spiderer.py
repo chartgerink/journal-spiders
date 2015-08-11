@@ -13,7 +13,7 @@ def springer(journal):
 	# links to recognize at lvl1 for lvl2
 	lvl1_recog = 'http://link.springer.com/journal/[0-9]{1,}/[0-9]{1,}/[0-9]{1,}/page/[0-9]{1,}'
 	# links to recognize at lvl2 for lvl3
-	lvl2_recog = 'http://link.springer.com/article/[0-9]{2}.[0-9]{4}/s[0-9]{5}-[0-9]{3}-[0-9]{4}-[0-9]{1}'
+	lvl2_recog = 'http://link.springer.com/article/[0-9]{2}.[0-9]{4}/.*(?!/fulltext.html)$'
 
 	# get all links from lvl1 (in an array)
 	lvl2_unselect = np.array(process(lvl1))
@@ -22,8 +22,45 @@ def springer(journal):
 	vmatch = np.vectorize(lambda x:bool(r.match(x)))
 	lvl2 = np.sort(lvl2_unselect[vmatch(lvl2_unselect)]) # make sure they are sorted
 
-	# get all links from subsequent pages
-	# above only gets the links from page 1
+	# create lvl3 object to append to
+	lvl3 = []
+	for link in lvl2:
+		# get all links from lvl3 (in an array)
+		lvl3_unselect = np.array(process(link))
+	
+		# select only the lvl3 recognized links
+		r = re.compile(lvl2_recog)
+		vmatch = np.vectorize(lambda x:bool(r.match(x)))
+		lvl3.append(np.sort(lvl3_unselect[vmatch(lvl3_unselect)]))
+
+		i = 1
+		x = "continue"
+		while x == "continue":
+			s = list(link)
+			s[-1] = str(i + 1)
+			link = "".join(s)
+
+			lvl3_unselect = np.array(process(link))
+	
+			# select only the lvl3 recognized links
+			r = re.compile(lvl2_recog)
+			vmatch = np.vectorize(lambda x:bool(r.match(x)))
+			temp = np.sort(lvl3_unselect[vmatch(lvl3_unselect)])
+
+			if temp.size == 0:
+				x = "stop"
+
+			if x == "continue":
+				lvl3.append(temp)
+
+			i += 1
+
+		print "Still working on lvl3 extraction, %s" % link
+
+	# fit all results of lvl3 into one array instead of multiple
+	lvl3 = np.concatenate(lvl3)
+
+	np.savetxt("journals/springer_%s.csv" % journal, lvl3, fmt = "%s")
 
 
 def sage(journal):
@@ -79,4 +116,4 @@ def sage(journal):
 	# fit all results of lvl4 into one array instead of multiple
 	lvl4 = np.concatenate(lvl4)
 	
-	np.savetxt("journals/%s.csv" % journal, lvl4, fmt = "%s")
+	np.savetxt("journals/sage_%s.csv" % journal, lvl4, fmt = "%s")
