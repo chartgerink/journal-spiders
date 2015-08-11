@@ -2,6 +2,30 @@ def spiderer(journal, publisher):
 	if publisher == 'sage':
 		sage(journal = journal)
 
+def springer(journal):
+	import numpy as np
+	import re
+	from get_links import process
+
+	# lvl1 is the base url
+	lvl1 = 'http://link.springer.com/journal/volumesAndIssues/%s' % journal
+
+	# links to recognize at lvl1 for lvl2
+	lvl1_recog = 'http://link.springer.com/journal/[0-9]{1,}/[0-9]{1,}/[0-9]{1,}/page/[0-9]{1,}'
+	# links to recognize at lvl2 for lvl3
+	lvl2_recog = 'http://link.springer.com/article/[0-9]{2}.[0-9]{4}/s[0-9]{5}-[0-9]{3}-[0-9]{4}-[0-9]{1}'
+
+	# get all links from lvl1 (in an array)
+	lvl2_unselect = np.array(process(lvl1))
+	# select only the lvl2 recognized links
+	r = re.compile(lvl1_recog)
+	vmatch = np.vectorize(lambda x:bool(r.match(x)))
+	lvl2 = np.sort(lvl2_unselect[vmatch(lvl2_unselect)]) # make sure they are sorted
+
+	# get all links from subsequent pages
+	# above only gets the links from page 1
+
+
 def sage(journal):
 	import numpy as np
 	import re
