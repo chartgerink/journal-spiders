@@ -13,7 +13,7 @@ def spiderer(journal, publisher):
 		# links to recognize at lvl2 for lvl3
 		lvl2_recog = 'http://%s.sagepub.com/content/vol[0-9]{1,}/issue[0-9]{1,}/' % journal
 		# links to recognize at lvl3 for lvl4
-		lvl3_recog = 'http://%s.sagepub.com/content/[0-9]{1,}/[0-9]{1,}/[0-9]{1,}.abstract' % journal
+		lvl3_recog = 'http://%s.sagepub.com/content/[0-9]{1,}/[0-9]{1,}/[0-9]{1,}.full.pdf+html' % journal
 
 		# get all links from lvl1 (in an array)
 		lvl2_unselect = np.array(process(lvl1))
