@@ -60,7 +60,7 @@ def springer(journal):
 	# fit all results of lvl3 into one array instead of multiple
 	lvl3 = np.concatenate(lvl3)
 
-	np.savetxt("journals/springer_%s.csv" % journal, lvl3, fmt = "%s")
+	np.savetxt("journal-links/springer_%s.csv" % journal, lvl3, fmt = "%s")
 
 
 def sage(journal):
@@ -75,7 +75,7 @@ def sage(journal):
 	# links to recognize at lvl2 for lvl3
 	lvl2_recog = 'http://%s.sagepub.com/content/vol[0-9]{1,}/issue[0-9]{1,}/' % journal
 	# links to recognize at lvl3 for lvl4
-	lvl3_recog = 'http://%s.sagepub.com/content/[0-9]{1,}/[0-9]{1,}/[0-9]{1,}.full.pdf+html' % journal
+	lvl3_recog = 'http://%s.sagepub.com/content/[0-9]{1,}/[0-9]{1,}/[0-9]{1,}.full.pdf\+html' % journal
 
 	# get all links from lvl1 (in an array)
 	lvl2_unselect = np.array(process(lvl1))
@@ -116,4 +116,4 @@ def sage(journal):
 	# fit all results of lvl4 into one array instead of multiple
 	lvl4 = np.concatenate(lvl4)
 	
-	np.savetxt("journals/sage_%s.csv" % journal, lvl4, fmt = "%s")
+	np.savetxt("journal-links/sage_%s.csv" % journal, lvl4, fmt = "%s")

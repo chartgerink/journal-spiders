@@ -6,8 +6,8 @@ Note: this is currently being made based on the SAGE journal layout, as presente
 
 The main workhorse, [`get_links.py`](https://github.com/jabbalaci/Bash-Utils/blob/master/get_links.py) was written by Laszlo Szathmary in 2011. This file returns all links on a webpage, which is all we really need. Link extraction currently works for both SAGE journals and Springer journals. In order to run this:
 
-1. Import `spiderer` as module into python
-2. Run `sage()` or `springer()` to download all links for that specific journal. For the `sage()` you only need the first three letters of the web url (e.g., `pss` for [Psychological Science](pss.sagepub.com)); for `springer()` you require the unique journal identifier (e.g., 13428 for [Behavior Research Methods](http://link.springer.com/journal/volumesAndIssues/13428)).
+1. Import `spiderer` as module into python (make sure to have installed the `BeautifulSoup` module! `pip install BeautifulSoup` to do this)
+2. Run `spiderer.sage()` or `spiderer.springer()` to download all links for that specific journal. For the `spiderer.sage()` you only need the first three letters of the web url (e.g., `pss` for [Psychological Science](pss.sagepub.com)); for `springer()` you require the unique journal identifier (e.g., 13428 for [Behavior Research Methods](http://link.springer.com/journal/volumesAndIssues/13428)).
 
 If you want to collect the links for all journals available in `journal_list.csv`, you only need to use the command `python run_all.py` in the commandline of your choosing.
 
