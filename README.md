@@ -4,8 +4,16 @@ The ContentMine facilitates scraping journals, via both [`getpapers`](), [`quick
 
 Note: this is currently being made based on the SAGE journal layout, as presented in Psychological Science. Cross-testing within SAGE has been done for Perspectives on Psychological Science and Personality and Social Psychology Review. Other publishers will be added later
 
-The main workhorse, [`get_links.py`](https://github.com/jabbalaci/Bash-Utils/blob/master/get_links.py) was written by Laszlo Szathmary in 2011. This file returns all links on a webpage, which is all we really need. What needs to be done manually is K-folded:
+The main workhorse, [`get_links.py`](https://github.com/jabbalaci/Bash-Utils/blob/master/get_links.py) was written by Laszlo Szathmary in 2011. This file returns all links on a webpage, which is all we really need. Link extraction currently works for both SAGE journals and Springer journals. In order to run this:
 
-1. Edit the `edit.py` file according to your journal (SAGE only for now). Typically, only the part prior to `.sagepub.com/...` has to be edited and the journal name (note: journal is also the name for which the file will be written)
-2. Run `spiderer.py`
-3. Wait.
+1. Import `spiderer` as module into python
+2. Run `sage()` or `springer()` to download all links for that specific journal. For the `sage()` you only need the first three letters of the web url (e.g., `pss` for [Psychological Science](pss.sagepub.com)); for `springer()` you require the unique journal identifier (e.g., 13428 for [Behavior Research Methods](http://link.springer.com/journal/volumesAndIssues/13428)).
+
+If you want to collect the links for all journals available in `journal_list.csv`, you only need to use the command `python run_all.py` in the commandline of your choosing.
+
+To-do
+
+- [ ] Incorporate some form of selection mechanism into the journal_list
+- [ ] Incorporate a date checker to prevent re-spidering of recently spidered journals (what is a reasonable timeframe for this?)
+- [ ] 
+- [ ] 
