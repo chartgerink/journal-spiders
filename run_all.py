@@ -17,7 +17,7 @@ journals = np.genfromtxt('journal_list.csv',
 # 4. Journal full name
 # 5. Selection variable (1 = run; 0 = no run)
 # 6. Field
-
+	
 current = datetime.strptime(strftime('%Y%m%d'), '%Y%m%d')
 
 for i in range(0, len(journals)):
@@ -50,4 +50,5 @@ for i in range(0, len(journals)):
 				delimiter = ',',
 				fmt = '%s')
 
+	time.sleep(np.random.poisson(3))
 	print 'Running... Currently at iteration %s of %s' % (i, len(journals))
