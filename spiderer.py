@@ -17,7 +17,7 @@ def elsevier(journal):
 	lvl1 = 'http://www.sciencedirect.com/science/journal/%s' % journal	
 
 	# links to recognize at lvl1 for lvl2
-	lvl1_recog = 'http://www.sciencedirect.com/science/journal/%s/[0-9]{1,2}' % journal
+	lvl1_recog = '(http://www\.sciencedirect\.com/science/journal/%s/[0-9]{1,2})(?!/.*)$' % journal
 	# links to recognize at lvl2 for lvl3
 	lvl2_recog = 'http://www\.sciencedirect\.com/science/journal/%s/[0-9]{1,2}/[0-9]{1,}' %journal	
 	# links to recognize at lvl3 for lvl4
