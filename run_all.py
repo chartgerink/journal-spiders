@@ -1,5 +1,6 @@
 from spiderer import spiderer
 from time import strftime
+from time import sleep
 from datetime import datetime
 import numpy as np
 
@@ -50,5 +51,5 @@ for i in range(0, len(journals)):
 				delimiter = ',',
 				fmt = '%s')
 
-	time.sleep(np.random.poisson(3))
+	sleep(np.random.poisson(3))
 	print 'Running... Currently at iteration %s of %s' % (i, len(journals))
