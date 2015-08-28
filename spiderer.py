@@ -59,11 +59,10 @@ def springer(journal):
 
 		print "Still working on lvl3 extraction, %s" % link
 
-	if not lvl3.size == 0:
-		# fit all results of lvl3 into one array instead of multiple
-		lvl3 = np.concatenate(lvl3)
+	# fit all results of lvl3 into one array instead of multiple
+	lvl3 = np.concatenate(lvl3)
 
-		np.savetxt("journal-links/springer_%s.csv" % journal, lvl3, fmt = "%s")
+	np.savetxt("journal-links/springer_%s.csv" % journal, lvl3, fmt = "%s")
 
 
 def sage(journal):
@@ -116,8 +115,7 @@ def sage(journal):
 		
 		print "Still working on lvl4 extraction, %s" % link
 	
-	if not lvl4.size == 0:
-		# fit all results of lvl4 into one array instead of multiple
-		lvl4 = np.concatenate(lvl4)
+	# fit all results of lvl4 into one array instead of multiple
+	lvl4 = np.concatenate(lvl4)
 	
-		np.savetxt("journal-links/sage_%s.csv" % journal, lvl4, fmt = "%s")
+	np.savetxt("journal-links/sage_%s.csv" % journal, lvl4, fmt = "%s")
