@@ -19,6 +19,9 @@ journals = np.genfromtxt('journal_list.csv',
 # 5. Selection variable (1 = run; 0 = no run)
 # 6. Field
 	
+# Ensure a random ordering of the array to prevent publisher recurrence
+np.random.shuffle(journals)
+
 current = datetime.strptime(strftime('%Y%m%d'), '%Y%m%d')
 
 for i in range(0, len(journals)):
