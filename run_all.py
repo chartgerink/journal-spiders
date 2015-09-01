@@ -24,35 +24,50 @@ np.random.shuffle(journals)
 
 current = datetime.strptime(strftime('%Y%m%d'), '%Y%m%d')
 
-for i in range(0, len(journals)):
-	if journals[i][4] == '1':
-		if not not journals[i][0]:
-			last = datetime.strptime(journals[i][0], '%Y%m%d')
-
-			days = current - last
-
-			if days.days > donotrun_days:
-				# Run the spiderer for the journal
-				spiderer(journal = journals[i][1], publisher = journals[i][2])
-				# Update the last update time
-				journals[i][0] = strftime("%Y%m%d")
-
-				# This updates the last time the links have been generated
-				np.savetxt('journal_list.csv',
-					journals,
-					delimiter = ',',
-					fmt = '%s')
-		else:
-			# Run the spiderer for the journal
-			spiderer(journal = journals[i][1], publisher = journals[i][2])
-			# Update the last update time
-			journals[i][0] = strftime("%Y%m%d")
-
-			# This updates the last time the links have been generated
-			np.savetxt('journal_list.csv',
-				journals,
-				delimiter = ',',
-				fmt = '%s')
-
-	sleep(np.random.poisson(3))
-	print 'Running... Currently at iteration %s of %s' % (i, len(journals))
+while any(journals[: ,0] == ''):
+	for i in range(0, len(journals)):
+		if journals[i][4] == '1':
+			if not not journals[i][0]:
+				last = datetime.strptime(journals[i][0], '%Y%m%d')
+	
+				days = current - last
+	
+				if days.days > donotrun_days:
+					try:
+						# Run the spiderer for the journal
+						spiderer(journal = journals[i][1], publisher = journals[i][2])
+						# Update the last update time
+						journals[i][0] = strftime("%Y%m%d")
+	
+						# This updates the last time the links have been generated
+						np.savetxt('journal_list.csv',
+							journals,
+							delimiter = ',',
+							fmt = '%s')
+					except (TypeError, IndexError):
+						pass
+					except ValueError:
+						journals[i][4] = '0'
+					except IOError:
+						sleep(np.random.poisson(60))
+			else:
+				try:
+					# Run the spiderer for the journal
+					spiderer(journal = journals[i][1], publisher = journals[i][2])
+					# Update the last update time
+					journals[i][0] = strftime("%Y%m%d")
+	
+					# This updates the last time the links have been generated
+					np.savetxt('journal_list.csv',
+						journals,
+						delimiter = ',',
+						fmt = '%s')
+				except (TypeError, IndexError):
+						pass
+				except ValueError:
+						journals[i][4] = '0'
+				except IOError:
+						sleep(np.random.poisson(60))
+	
+		sleep(np.random.poisson(3))
+		print 'Running... Currently at iteration %s of %s' % (i, len(journals))
