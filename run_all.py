@@ -48,6 +48,11 @@ while any(journals[: ,0] == ''):
 						pass
 					except ValueError:
 						journals[i][4] = '0'
+
+						np.savetxt('journal_list.csv',
+							journals,
+							delimiter = ',',
+							fmt = '%s')
 					except IOError:
 						sleep(np.random.poisson(60))
 			else:
@@ -66,8 +71,13 @@ while any(journals[: ,0] == ''):
 						pass
 				except ValueError:
 						journals[i][4] = '0'
+
+						np.savetxt('journal_list.csv',
+							journals,
+							delimiter = ',',
+							fmt = '%s')
 				except IOError:
 						sleep(np.random.poisson(60))
 	
 		sleep(np.random.poisson(3))
-		print 'Running... Currently at iteration %s of %s' % (i, len(journals))
+		print 'Running... Currently at iteration %s of %s' % (i + 1, len(journals))

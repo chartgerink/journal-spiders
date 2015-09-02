@@ -19,7 +19,7 @@ def elsevier(journal):
 	# links to recognize at lvl1 for lvl2
 	lvl1_recog = '(http://www\.sciencedirect\.com/science/journal/%s/[0-9]{1,2})(?!/.*)$' % journal
 	# links to recognize at lvl2 for lvl3
-	lvl2_recog = 'http://www\.sciencedirect\.com/science/journal/%s/[0-9]{1,2}/[0-9]{1,}' %journal	
+	lvl2_recog = 'http://www\.sciencedirect\.com/science/journal/%s(/[0-9]{1,2})?/[0-9]{1,}(?!#maincontent)$' %journal	
 	# links to recognize at lvl3 for lvl4
 	lvl3_recog = '(http://www\.sciencedirect\.com/science/article/pii/S?%s[A-Z0-9]{8,})(?!.*main.pdf$)' %journal	
 
@@ -36,11 +36,12 @@ def elsevier(journal):
 	# Retrieve all pages that contain the separate volumes and issues
 	lvl2 = []
 	for link in lvl2_unselect:
-		temp = int(link[link.rfind('/') + 1:])	
+		temp = int(link[link.rfind('/') + 1:])
 		if not temp % 10:
 			lvl2.append(link)
-	# Add the final link
-	lvl2.append(lvl2_unselect[-1])
+		if link == lvl2_unselect[-1]:
+			lvl2.append(link)
+
 	# Sort for ease of use
 	lvl2 = np.sort(lvl2)
 
@@ -58,6 +59,7 @@ def elsevier(journal):
 
 	# fit all results of lvl3 into one array instead of multiple
 	lvl3 = np.concatenate(lvl3)
+	lvl3 = np.unique(lvl3)
 
 	lvl4 = []
 	for link in lvl3:
