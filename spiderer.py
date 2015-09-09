@@ -198,3 +198,14 @@ def springer(journal):
 	np.savetxt("journal-links/springer_%s.csv" % journal, lvl3, fmt = "%s")
 
 ###
+
+def wiley(journal):
+	import numpy as np
+	import re
+	from get_links import process
+
+	lvl1 = 'http://onlinelibrary.wiley.com/journal/%s/issues' % journal
+
+	# links to recognize at lvl1 for lvl2
+	lvl1_recog = 'http://onlinelibrary.wiley.com/journal/%s/issues?activeYear=[0-9]{4}' % journal
+	
