@@ -1,4 +1,6 @@
 def spiderer(journal, publisher):
+	if publisher == 'apa':
+		apa(journal = journal)
 	if publisher == 'elsevier':
 		elsevier(journal = journal)
 	if publisher == 'sage':
@@ -10,6 +12,64 @@ def spiderer(journal, publisher):
 	if publisher == 'wiley':
 		wiley(journal = journal)
 		
+###
+
+def apa(journal):
+	import re
+	from time import sleep
+	import numpy as np
+	import selenium
+	from selenium import webdriver
+	from selenium.webdriver.common.keys import Keys
+
+	# Open firefox
+	driver = webdriver.Firefox()
+	# Navigate to tilburg worldcat
+	driver.get("https://tilburguniversity.on.worldcat.org/discovery")
+	# Search for journal ISSN
+	elem = driver.find_element_by_xpath('//*[@id="query"]')
+	elem.send_keys(journal)
+	elem.send_keys(Keys.RETURN)
+	# Open the jouranl
+	elem = driver.find_element_by_xpath('//*[contains(@id, "full-text-button-")]')
+	sleep(1)
+	elem.click()
+
+	driver.switch_to_window(driver.window_handles[-1])
+	title=driver.title
+	
+	elem = driver.find_element_by_xpath('//*[@id="link_fulltext_1"]')
+	sleep(1)
+	elem.click()
+
+	elem = driver.find_element_by_xpath('//*[@id="lnkPageOptions"]')
+	sleep(1)
+	elem.click()
+
+	elem = driver.find_element_by_xpath('//*[@id="pageOptions"]/li[3]/ul/li[6]/a/span[2]')
+	sleep(1)
+	elem.click()
+	
+	links = []
+	i = 1
+	while True:
+		i += 1
+		if (i % 15) == 0:
+			sleep(np.random.poisson(20))
+		x1 = len(links)
+		elem = driver.find_elements_by_xpath('//*[contains(@id, "htmlft")]')
+		for each in elem:
+			links.append(each.get_attribute('href'))
+		print "New number of links: %s" % (len(links) - x1)
+		try:
+			nextbutton = driver.find_element_by_xpath('//*[@id="ctl00_ctl00_MainContentArea_MainContentArea_bottomMultiPage_lnkNext"]')
+			nextbutton.click()
+			sleep(np.random.poisson(1))
+		except selenium.common.exceptions.NoSuchElementException:
+			driver.close()
+			pass
+	np.savetxt("journal-links/apa_%s.csv" % journal, links, fmt = "%s")
+
 ###
 
 def elsevier(journal):
