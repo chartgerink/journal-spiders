@@ -5,6 +5,8 @@ def spiderer(journal, publisher):
 		sage(journal = journal)
 	if publisher == 'springer':
 		springer(journal = journal)
+	if publisher == 'taylorfrancis':
+		taylorfrancis(journal = journal)
 	if publisher == 'wiley':
 		wiley(journal = journal)
 		
@@ -256,12 +258,13 @@ def taylorfrancis(journal):
 		sleep(np.random.poisson(10))
 		print "Still working on issue extraction, %s" % link
 
-	fulltext = np.array(fulltext)
-	fulltext_recog = "http://www.tandfonline.com/doi/full/"
-	r = re.compile(fulltext_recog)
-	vmatch = np.vectorize(lambda x:bool(r.match(x)))
+		fulltext = np.array(fulltext)
+		fulltext_recog = "http://www.tandfonline.com/doi/full/"
+		r = re.compile(fulltext_recog)
+		vmatch = np.vectorize(lambda x:bool(r.match(x)))
 	
-	issuesfulltext.append(fulltext[vmatch(fulltext)])
+		issuesfulltext.append(fulltext[vmatch(fulltext)])
+		
 	issuesfulltext = np.concatenate(issuesfulltext)
 
 	np.savetxt("journal-links/taylorfrancis_%s.csv" % journal, issuesfulltext, fmt = "%s")
