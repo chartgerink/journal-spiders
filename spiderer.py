@@ -201,6 +201,73 @@ def springer(journal):
 
 ###
 
+def taylorfrancis(journal):
+	import re
+	from time import sleep
+	import numpy as np
+	import selenium
+	from selenium import webdriver
+	from selenium.webdriver.common.keys import Keys
+
+	# Open journal page
+	driver = webdriver.Firefox()
+	driver.get("http://www.tandfonline.com/loi/%s" % journal)
+	# Open all volume indexers
+	select = 'True'
+	while select == 'True':
+		for i in xrange(1,999):
+			try:
+				elem = driver.find_element_by_xpath('//*[@id="unit2"]/div[2]/div[2]/ul/li[%s]/div/a[2]' % i)
+				elem.click()
+				sleep(np.random.poisson(2))
+			except selenium.common.exceptions.NoSuchElementException:
+				select = 'False'
+	# Get list of issues
+	try:
+		elem = driver.find_elements_by_xpath('//*[@id="unit2"]/div[2]/div[2]/ul/li[*]/div[*]/div[1]/a')
+	except selenium.common.exceptions.StaleElementReferenceException:
+		print "ARGH"
+	
+	issues = []
+	for issue in elem:
+		issues.append(str(issue.get_attribute('href')))
+
+	driver.close()
+	# Open each issue
+	issuesfulltext = []
+
+	for link in issues:
+		driver = webdriver.Firefox()
+		driver.get(link)
+
+		# Find full text htmls
+		try:
+			elem = driver.find_elements_by_css_selector("a[href*='http://www.tandfonline.com/doi/full/']")
+			# elem = driver.find_elements_by_xpath('//*[@id="unit2"]/form/div[*]/div/div[2]/a')
+
+			fulltext = []
+			for html in elem:
+				fulltext.append(str(html.get_attribute('href')))
+		except selenium.common.exceptions.StaleElementReferenceException:
+			print "Fail"
+			sleep(np.random.poisson(10))
+
+		driver.close()
+		sleep(np.random.poisson(10))
+		print "Still working on issue extraction, %s" % link
+
+	fulltext = np.array(fulltext)
+	fulltext_recog = "http://www.tandfonline.com/doi/full/"
+	r = re.compile(fulltext_recog)
+	vmatch = np.vectorize(lambda x:bool(r.match(x)))
+	
+	issuesfulltext.append(fulltext[vmatch(fulltext)])
+	issuesfulltext = np.concatenate(issuesfulltext)
+
+	np.savetxt("journal-links/taylorfrancis_%s.csv" % journal, issuesfulltext, fmt = "%s")
+
+###
+
 def wiley(journal):
 	import numpy as np
 	import re
@@ -261,3 +328,6 @@ def wiley(journal):
 
 	journal_save = re.sub('/', '', re.sub('\(', '', re.sub('\)', '', journal)))
 	np.savetxt("journal-links/wiley_%s.csv" % journal_save, lvl4, fmt = "%s")
+
+###
+
