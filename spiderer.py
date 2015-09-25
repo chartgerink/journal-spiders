@@ -67,7 +67,7 @@ def apa(journal):
 			sleep(np.random.poisson(1))
 		except selenium.common.exceptions.NoSuchElementException:
 			driver.close()
-			pass
+			break
 	np.savetxt("journal-links/apa_%s.csv" % journal, links, fmt = "%s")
 
 ###
