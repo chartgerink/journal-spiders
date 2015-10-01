@@ -30,6 +30,8 @@ def apa(journal):
 	elem = driver.find_element_by_xpath('//*[@id="query"]')
 	elem.send_keys(journal)
 	elem.send_keys(Keys.RETURN)
+	sleep(6)
+
 	# Open the jouranl
 	elem = driver.find_element_by_xpath('//*[contains(@id, "full-text-button-")]')
 	sleep(1)
