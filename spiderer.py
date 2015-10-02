@@ -32,17 +32,24 @@ def apa(journal):
 	elem.send_keys(Keys.RETURN)
 	sleep(6)
 
-	# Open the jouranl
-	elem = driver.find_element_by_xpath('//*[contains(@id, "full-text-button-")]')
-	sleep(1)
-	elem.click()
-
-	driver.switch_to_window(driver.window_handles[-1])
-	title=driver.title
+	# Open the journal
+	try:
+		elem = driver.find_element_by_xpath('//*[contains(@id, "full-text-button-")]')
+		sleep(1)
+		elem.click()
+		driver.switch_to_window(driver.window_handles[-1])
+		title=driver.title
+	except selenium.common.exceptions.ElementNotVisibleException:
+		print "Failed APA %s" % journal
+		raise ValueError
 	
-	elem = driver.find_element_by_xpath('//*[@id="link_fulltext_1"]')
-	sleep(1)
-	elem.click()
+	try:	
+		elem = driver.find_element_by_xpath('//*[@id="link_fulltext_1"]')
+		sleep(1)
+		elem.click()
+	except selenium.common.exceptions.ElementNotVisibleException:
+		print "Failed APA %s" % journal
+		raise ValueError
 
 	elem = driver.find_element_by_xpath('//*[@id="lnkPageOptions"]')
 	sleep(1)
