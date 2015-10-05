@@ -39,7 +39,7 @@ def apa(journal):
 		elem.click()
 		driver.switch_to_window(driver.window_handles[-1])
 		title=driver.title
-	except selenium.common.exceptions.ElementNotVisibleException:
+	except (selenium.common.exceptions.ElementNotVisibleException, selenium.common.exceptions.NoSuchElementException):
 		print "Failed APA %s" % journal
 		raise ValueError
 	
@@ -47,17 +47,25 @@ def apa(journal):
 		elem = driver.find_element_by_xpath('//*[@id="link_fulltext_1"]')
 		sleep(1)
 		elem.click()
-	except selenium.common.exceptions.ElementNotVisibleException:
+	except (selenium.common.exceptions.ElementNotVisibleException, selenium.common.exceptions.NoSuchElementException):
 		print "Failed APA %s" % journal
 		raise ValueError
 
-	elem = driver.find_element_by_xpath('//*[@id="lnkPageOptions"]')
-	sleep(1)
-	elem.click()
+	try:
+		elem = driver.find_element_by_xpath('//*[@id="lnkPageOptions"]')
+		sleep(1)
+		elem.click()
+	except (selenium.common.exceptions.ElementNotVisibleException, selenium.common.exceptions.NoSuchElementException):
+		print "Failed APA %s" % journal
+		raise ValueError
 
-	elem = driver.find_element_by_xpath('//*[@id="pageOptions"]/li[3]/ul/li[6]/a/span[2]')
-	sleep(1)
-	elem.click()
+	try:
+		elem = driver.find_element_by_xpath('//*[@id="pageOptions"]/li[3]/ul/li[6]/a/span[2]')
+		sleep(1)
+		elem.click()
+	except (selenium.common.exceptions.ElementNotVisibleException, selenium.common.exceptions.NoSuchElementException):
+		print "Failed APA %s" % journal
+		raise ValueError
 	
 	links = []
 	i = 1
