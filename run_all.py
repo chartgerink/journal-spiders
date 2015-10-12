@@ -4,7 +4,7 @@ from time import sleep
 from datetime import datetime
 import numpy as np
 
-donotrun_days = 7
+donotrun_days = 5
 
 journals = np.genfromtxt('journal_list.csv',
  delimiter = ',',
@@ -25,7 +25,7 @@ np.random.shuffle(journals)
 # Create a vector of values with days since last run
 current = datetime.strptime(strftime('%Y%m%d'), '%Y%m%d')
 rundays = []
-for i in xrange(1, len(journals[:,0])):
+for i in xrange(0, len(journals[:,0])):
 	try:
 		last = datetime.strptime(journals[i][0], '%Y%m%d')
 		days = current - last
