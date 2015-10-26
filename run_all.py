@@ -37,7 +37,7 @@ for i in xrange(0, len(journals[:,0])):
 # Loop through all journals, if not collected yet and 
 while any(journals.T[0][journals.T[4] == '1'] == '') or rundays > donotrun_days:
 	for i in range(0, len(journals)):
-		if journals[i][4] == '1':
+		if journals[i][4] == '1' & journals[i][2] == 'elsevier':
 			if not not journals[i][0]:
 				if rundays[i] > donotrun_days:
 					try:
