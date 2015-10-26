@@ -94,6 +94,9 @@ def elsevier(journal):
 	import re
 	from get_links import process
 
+	if not len(str(journal)) == 8:
+		journal = '0' * (8 - len(str(journal))) + journal
+
 	# lvl1 is the base url
 	lvl1 = 'http://www.sciencedirect.com/science/journal/%s' % journal	
 
