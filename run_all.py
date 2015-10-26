@@ -4,7 +4,7 @@ from time import sleep
 from datetime import datetime
 import numpy as np
 
-donotrun_days = 5
+donotrun_days = 7
 
 journals = np.genfromtxt('journal_list.csv',
  delimiter = ',',
