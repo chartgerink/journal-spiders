@@ -324,8 +324,7 @@ def taylorfrancis(journal):
 
 		# Find full text htmls
 		try:
-			elem = driver.find_elements_by_css_selector("a[href*='http://www.tandfonline.com/doi/full/']")
-			# elem = driver.find_elements_by_xpath('//*[@id="unit2"]/form/div[*]/div/div[2]/a')
+			elem = driver.find_elements_by_xpath('//*[@id="unit2"]/form/div[*]/div/div[2]/a')
 
 			fulltext = []
 			for html in elem:
